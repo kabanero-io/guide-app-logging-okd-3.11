@@ -1,5 +1,5 @@
 ---
-permalink: /guides/app-logging
+permalink: /guides/app-logging/
 ---
 :projectid: app-logging
 :page-layout: guide
