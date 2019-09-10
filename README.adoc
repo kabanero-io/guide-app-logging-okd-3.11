@@ -68,7 +68,7 @@ logging-kibana-2-tplkv                        2/2       Running     6          4
 logging-kibana-ops-1-bgl8k                    2/2       Running     2          3d
 ----
 
-You can see that Elasticsearch, Kibana, and Curator all have two types of pods: the main one and a secondary set of pods with *-ops* postfix, except for fluentd. This situation is expected as the split of application logs, and the OpenShift operations logs occurd inside the single Fluentd instance. All of the node system logs and the logs from projects, **default**, **openshift**, and **openshift-infra** are considered as operation (or ops) logs and are aggregated to the ops Elasticsearch server. The logs from any other namespaces are aggregated to the main Elasticsearch server.
+You can see that Elasticsearch, Kibana, and Curator all have two types of pods: the main one and a secondary set of pods with *-ops* postfix, except for Fluentd. This situation is expected as the split of application logs, and the OpenShift operations logs occurs inside the single Fluentd instance. All of the node system logs and the logs from projects, **default**, **openshift**, and **openshift-infra** are considered as operation (or ops) logs and are aggregated to the ops Elasticsearch server. The logs from any other namespaces are aggregated to the main Elasticsearch server.
 
 The openshift-logging ansible-playbook also exposes two routes for external access to the Kibana and ops Kibana web console.
 
