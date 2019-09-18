@@ -8,15 +8,15 @@ permalink: /guides/app-logging/
 :page-guide-category: logging
 :page-essential: true
 :page-essential-order: 1
-:page-description: Learn how to do application logging on OpenShift with Elasticsearch, FluentD, and Kibana.
+:page-description: Learn how to do application logging on OKD with Elasticsearch, FluentD, and Kibana.
 :guide-author: Kabanero
 :page-tags: ['logging', 'Elasticsearch', 'FluentD', 'Kibana']
 :repo-description: Visit the https://kabanero.io/guides/{projectid}.html[website] for the rendered version of the guide.
-= Application Logging on OpenShift with Elasticsearch, FluentD, and Kibana
+= Application Logging on OKD with Elasticsearch, FluentD, and Kibana
 
-OpenShift provides a preconfigured EFK(Elasticsearch, FluentD, and Kibana) stack, which DevOps uses to aggregate all container logs. You can install EFK stacks by using the ansible-playbook command that resides in the https://github.com/openshift/openshift-ansible/tree/release-3.11[openshift-ansible] repository. After the installation completes, the EFK deployments reside inside the *openshift-logging* namespace of the OpenShift cluster.
+OKD (Openshift Origin Community Distribution) provides a preconfigured EFK(Elasticsearch, FluentD, and Kibana) stack, which DevOps uses to aggregate all container logs. You can install EFK stacks by using the ansible-playbook command that resides in the https://github.com/openshift/openshift-ansible/tree/release-3.11[openshift-ansible] repository. After the installation completes, the EFK deployments reside inside the *openshift-logging* namespace of the OKD cluster.
 
-Set up two separate EFK stacks. One stack is for logs from Kubernetes and OpenShift components.  The other EFK stack is for user application logs.
+Set up two separate EFK stacks. One stack is for logs from Kubernetes and OKD components.  The other EFK stack is for user application logs.
 
 There are several advantages to having an EFK stack for user applications.
 
@@ -26,7 +26,7 @@ There are several advantages to having an EFK stack for user applications.
 
 == Install openshift-logging 
 
-Installing EFK on OpenShift requires an OpenShift host https://docs.openshift.com/container-platform/3.11/install/configuring_inventory_file.html[inventory file] and the openshift-ansible playbook for logging the installation. After you create the inventory file, add the following Ansible variables to the **[OSEv3:vars]** section of the inventory file.
+Installing EFK on OKD requires an https://docs.okd.io/3.11/install/configuring_inventory_file.html[inventory host file] and the openshift-ansible playbook for logging the installation. After you create the inventory file, add the following Ansible variables to the **[OSEv3:vars]** section of the inventory file.
 
 [source]
 ----
@@ -37,15 +37,15 @@ openshift_logging_es_ops_memory_limit=5G
 openshift_logging_es_memory_limit=3G
 ----
 
-There are many other Ansible variables provided by OpenShift for advanced fine-tuning of the EFK stack. Detailed information about the installation and configuration can be found in OpenShift documentation https://docs.openshift.com/container-platform/3.11/install_config/aggregate_logging.html[Aggregating Container Logs]. 
+There are many other Ansible variables provided by OKD for advanced fine-tuning of the EFK stack. Detailed information about the installation and configuration can be found in OKD documentation https://docs.okd.io/3.11/install_config/aggregate_logging.html[Aggregating Container Logs]. 
 
 Let's examine each of the variables in detail. 
 
 * Setting `openshift_logging_use_ops=True` instructs Ansible to install two EFKs with a dedicated ops deployment. 
 * `openshift_logging_es_nodeselector` and `openshift_logging_es_ops_nodeselector` are two variables required by the openshift-logging ansible-playbook to install Elasticsearch. You usually set these variables to the infra nodes. 
-* `openshift_logging_es_memory_limit` and `openshift_logging_es_ops_memory_limit` are self-explanatory and can be set according to your preference. For stable operation, allocate at least 2 GB of memory for each of the Elasticsearch deployments. If memory is not specified explicitly, OpenShift allocates 16 GB of memory for each of the Elasticsearch deployments by default. It is highly recommended to install openshift-logging on systems with at least 32 GB of RAM when `openshift_logging_use_ops` is set to true.
+* `openshift_logging_es_memory_limit` and `openshift_logging_es_ops_memory_limit` are self-explanatory and can be set according to your preference. For stable operation, allocate at least 2 GB of memory for each of the Elasticsearch deployments. If memory is not specified explicitly, OKD allocates 16 GB of memory for each of the Elasticsearch deployments by default. It is highly recommended to install openshift-logging on systems with at least 32 GB of RAM when `openshift_logging_use_ops` is set to true.
 
-After all the variables are set in the inventory file, run the ansible-playbook command to install the EFK stack onto its current OpenShift Cluster.
+After all the variables are set in the inventory file, run the ansible-playbook command to install the EFK stack onto its current OKD Cluster.
 
 [role="command"]
 ----
@@ -68,7 +68,7 @@ logging-kibana-2-tplkv                        2/2       Running     6          4
 logging-kibana-ops-1-bgl8k                    2/2       Running     2          3d
 ----
 
-You can see that Elasticsearch, Kibana, and Curator all have two types of pods: the main one and a secondary set of pods with *-ops* postfix, except for Fluentd. This situation is expected as the split of application logs, and the OpenShift operations logs occurs inside the single Fluentd instance. All of the node system logs and the logs from projects, **default**, **openshift**, and **openshift-infra** are considered to be operation (or ops) logs and are aggregated to the ops Elasticsearch server. The logs from any other namespaces are aggregated to the main Elasticsearch server.
+You can see that Elasticsearch, Kibana, and Curator all have two types of pods: the main one and a secondary set of pods with *-ops* postfix, except for Fluentd. This situation is expected as the split of application logs, and the OKD operations logs occurs inside the single Fluentd instance. All of the node system logs and the logs from projects, **default**, **openshift**, and **openshift-infra** are considered to be operation (or ops) logs and are aggregated to the ops Elasticsearch server. The logs from any other namespaces are aggregated to the main Elasticsearch server.
 
 The openshift-logging ansible-playbook also exposes two routes for external access to the Kibana and ops Kibana web consoles.
 
@@ -81,7 +81,7 @@ logging-kibana       kibana.apps.9.37.135.153.nip.io                 logging-kib
 logging-kibana-ops   kibana-ops.apps.9.37.135.153.nip.io             logging-kibana-ops   <all>     reencrypt/Redirect   None
 ----
 
-If you examine the **logging-kibana-ops** URL, all the operation logs generated by Openshift and Kubernetes are visible on Kibana's **Discover** page.   
+If you examine the **logging-kibana-ops** URL, all the operation logs generated by OKD and Kubernetes are visible on Kibana's **Discover** page.   
 
 image::/img/guide/kibana-ops.png[link="/img/guide/kibana-ops.png" alt="Kibana ops page with operation log entries"]
 *Figure 1: Kibana ops page with operation log entries*
@@ -92,7 +92,7 @@ Before you use the **logging-kibana** for application logs, make sure that the a
 
 In cases where the application server provides the option, output application logs in JSON format.  This will let you fully take advantage of Kibana's dashboard functions. Kibana is then able to process the data from each individual field of the JSON object to create customized visualizations for that field. 
 
-See the Kibana dashboard page by using the routes URL https://kibana.apps.9.37.135.153.nip.io. Log in using your OpenShift user and password, then the browser should redirect you to Kibana's **Discover** page where the newest logs of the selected index are being streamed. Select the **project.\*** index to view the application logs generated by the deployed application. 
+See the Kibana dashboard page by using the routes URL https://kibana.apps.9.37.135.153.nip.io. Log in using your OKD user and password, then the browser should redirect you to Kibana's **Discover** page where the newest logs of the selected index are being streamed. Select the **project.\*** index to view the application logs generated by the deployed application. 
 
 image::/img/guide/kibana_app.png[link="/img/guide/kibana_app.png" alt="Kibana page with the application log entries"]
 *Figure 2: Kibana page with the application log entries*
