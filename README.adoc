@@ -56,7 +56,7 @@ The installation process can take a few minutes to complete. After the installat
 
 [source,role="no_copy"]
 ----
-[root@rhel-2EFK ~]# oc get pods -n openshift-logging
+[root@rhel7-okd ~]# oc get pods -n openshift-logging
 
 NAME                                          READY     STATUS      RESTARTS   AGE
 logging-curator-1565163000-9fvpf              0/1       Completed   0          20h
@@ -74,7 +74,7 @@ The openshift-logging ansible-playbook also exposes two routes for external acce
 
 [source,role="no_copy"]
 ----
-[root@rhel-2EFK ~]# oc get routes -n openshift-logging
+[root@rhel7-okd ~]# oc get routes -n openshift-logging
 
 NAME                 HOST/PORT                             PATH      SERVICES             PORT      TERMINATION          WILDCARD
 logging-kibana       kibana.apps.9.37.135.153.nip.io                 logging-kibana       <all>     reencrypt/Redirect   None
