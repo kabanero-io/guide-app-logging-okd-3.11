@@ -31,7 +31,7 @@ Installing EFK on OKD requires an https://docs.okd.io/3.11/install/configuring_i
 [source]
 ----
 openshift_logging_use_ops=True
-openshift_logging_es_ops_nodeselector={“node-role.kubernetes.io/infra”:“true”}
+openshift_logging_es_ops_nodeselector={"node-role.kubernetes.io/infra":"true"}
 openshift_logging_es_nodeselector={"node-role.kubernetes.io/infra":"true"}
 openshift_logging_es_ops_memory_limit=5G
 openshift_logging_es_memory_limit=3G
