@@ -14,7 +14,9 @@ permalink: /guides/app-logging/
 :repo-description: Visit the https://kabanero.io/guides/{projectid}.html[website] for the rendered version of the guide.
 = Application Logging on OKD with Elasticsearch, FluentD, and Kibana
 
-OKD (Openshift Origin Community Distribution) provides a preconfigured EFK(Elasticsearch, FluentD, and Kibana) stack, which DevOps uses to aggregate all container logs. You can install EFK stacks by using the ansible-playbook command that resides in the https://github.com/openshift/openshift-ansible/tree/release-3.11[openshift-ansible] repository. After the installation completes, the EFK deployments reside inside the *openshift-logging* namespace of the OKD cluster.
+A Kubernetes environment constantly produce logs by its running pod processes. To effectively manage this log data and ensure no loss of log data occurs when a pod terminates, deploy a log aggregation tool on the user's OKD cluster to control the logging activities. Log aggregation tools help users persist, search, and visualize the log data that is gathered from the pods across the OKD cluster. There are several log aggregation tools in the market that offer similar capabilities. This guide describes the process of deploying a log aggregation tool, **EFK (Elasticsearch, FluentD, and Kibana)**, using the ansible-playbook script provided by OKD.
+
+You use this preconfigured EFK stack to aggregate all container logs and use the ansible-playbook that resides in the https://github.com/openshift/openshift-ansible/tree/release-3.11[openshift-ansible] repository to install EFK stacks on a OKD cluster. After a successful installation, the EFK deployments reside inside the *openshift-logging* namespace of the OKD cluster.
 
 Set up two separate EFK stacks. One stack is for logs from Kubernetes and OKD components.  The other EFK stack is for user application logs.
 
