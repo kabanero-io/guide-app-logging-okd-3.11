@@ -117,4 +117,4 @@ image::/img/guide/kibana_open_liberty_dashboard.png[link="/img/guide/kibana_open
 
 == Reinstalling and uninstalling openshift-logging 
 
-If changes need to be made for the installed EFK stack, rerun the ansible-playbook installation command with updated ansible variables values in the inventory file. It's always safe to reinstall openshift-logging by running this command. If the aggregated container's logging stack is no longer needed in the current cluster, you can use the same ansible-playbook command to uninstall the openshift-logging feature. Uninstall the feature by setting the **openshift_logging_install_logging** variable to False.
+If changes need to be made for the installed EFK stack, rerun the ansible-playbook installation command with updated ansible variables values in the inventory file. If the aggregated container's logging stack is no longer needed in the current cluster, you can use the same ansible-playbook command to uninstall the openshift-logging feature. Uninstall the feature by setting the **openshift_logging_install_logging** variable to False.
