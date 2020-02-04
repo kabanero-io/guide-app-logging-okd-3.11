@@ -12,7 +12,7 @@ permalink: /guides/app-logging/
 :guide-author: Kabanero
 :page-tags: ['logging', 'Elasticsearch', 'FluentD', 'Kibana']
 :repo-description: Visit the https://kabanero.io/guides/{projectid}.html[website] for the rendered version of the guide.
-= Application Logging with Kabanero on OKD with Elasticsearch, FluentD, and Kibana
+= Application Logging with Kabanero on OKD 3.11 with Elasticsearch, FluentD, and Kibana
 
 __The following guide has been tested with OKD 3.11/Kabanero 0.2.0.__
 
